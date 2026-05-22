@@ -1,0 +1,30 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background-color: #f0f2f5;
+  color: #1a1a2e;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  text-align: left;
+  display: block;
+  border: none;
+  min-height: 100svh;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+p { margin: 0; }
