@@ -22,7 +22,10 @@ function Devices() {
   useEffect(() => { fetchDevices(); }, []);
 
   const handleDeleteConfirm = () => {
-    fetch(`http://localhost:5000/api/devices/${deleteTargetId}`, { method: 'DELETE' })
+    fetch(`http://localhost:5000/api/devices/${deleteTargetId}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${localStorage.getItem('frsc_token')}` }
+    })
       .then(() => { fetchDevices(); setDeleteTargetId(null); });
   };
 
@@ -41,7 +44,10 @@ function Devices() {
       : 'http://localhost:5000/api/devices';
     fetch(url, {
       method,
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('frsc_token')}`
+      },
       body: JSON.stringify(formData)
     }).then(() => {
       fetchDevices();

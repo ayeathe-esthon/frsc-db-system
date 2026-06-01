@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { sql, config } = require('../db');
+const { verifyToken } = require('../middleware/auth');
 
 router.get('/', async (req, res) => {
   try {
@@ -24,7 +25,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
   const { DeviceName, SerialNumber, AssignedToStaffID, Status } = req.body;
   try {
     const pool = await sql.connect(config);
@@ -33,14 +34,14 @@ router.post('/', async (req, res) => {
       .input('SerialNumber', sql.VarChar, SerialNumber)
       .input('AssignedToStaffID', sql.Int, AssignedToStaffID || null)
       .input('Status', sql.VarChar, Status || null)
-      .query('INSERT INTO Devices (DeviceName, SerialNumber, AssignedToStaffID) VALUES (@DeviceName, @SerialNumber, @AssignedToStaffID)');
+      .query('INSERT INTO Devices (DeviceName, SerialNumber, AssignedToStaffID, Status) VALUES (@DeviceName, @SerialNumber, @AssignedToStaffID, @Status)');
     res.json({ message: 'Device created successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', verifyToken, async (req, res) => {
   const { DeviceName, SerialNumber, AssignedToStaffID, Status } = req.body;
   try {
     const pool = await sql.connect(config);
@@ -57,7 +58,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyToken, async (req, res) => {
   try {
     const pool = await sql.connect(config);
     await pool.request()

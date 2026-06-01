@@ -2,11 +2,11 @@ const sql = require('mssql');
 require('dotenv').config();
 
 const config = {
-  server: 'localhost',
-  database: 'frsc_db',
-  port: 1433,
-  user: 'frscadmin',
-  password: 'Admin1234!',
+  server: process.env.DB_SERVER,
+  database: process.env.DB_DATABASE,
+  port: Number(process.env.DB_PORT) || 1433,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
   options: {
     trustServerCertificate: true,
     encrypt: false,
