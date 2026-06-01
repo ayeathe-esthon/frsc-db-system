@@ -3,15 +3,19 @@ import { useEffect, useState } from "react";
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
   const [recentStaff, setRecentStaff] = useState([]);
+  const [allStaff, setAllStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/dashboard")
-      .then((res) => res.json())
-      .then((data) => {
-        setStats(data.stats);
-        setRecentStaff(data.recentStaff);
+    Promise.all([
+      fetch("http://localhost:5000/api/dashboard").then((res) => res.json()),
+      fetch("http://localhost:5000/api/staff").then((res) => res.json()),
+    ])
+      .then(([dashboardData, staffData]) => {
+        setStats(dashboardData.stats);
+        setRecentStaff(dashboardData.recentStaff);
+        setAllStaff(staffData);
         setLoading(false);
       })
       .catch((err) => {
@@ -76,7 +80,9 @@ export default function Dashboard() {
             {recentStaff.map((s, index) => (
               <tr key={s.StaffID} style={index % 2 === 0 ? styles.trEven : styles.trOdd}>
                 <td style={styles.td}>
-                  <span style={styles.idBadge}>#{s.StaffID}</span>
+                  <span style={styles.idBadge}>
+                    {allStaff.findIndex((member) => member.StaffID === s.StaffID) + 1 || index + 1}
+                  </span>
                 </td>
                 <td style={styles.td}>{s.FirstName}</td>
                 <td style={styles.td}>{s.LastName}</td>
