@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Icon from "../components/icons";
 
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
@@ -43,21 +44,21 @@ export default function Dashboard() {
 
       {/* Main Count Cards */}
       <div style={styles.cardGrid}>
-        <StatCard title="Total Staff" value={stats.totalStaff} color="#12aafc" icon="👥" />
-        <StatCard title="Departments" value={stats.totalDepartments} color="#1a6eb5" icon="🏢" />
-        <StatCard title="Total Devices" value={stats.totalDevices} color="#6a0dad" icon="💻" />
+        <StatCard title="Total Staff" value={stats.totalStaff} color="#12aafc" iconName="users" />
+        <StatCard title="Departments" value={stats.totalDepartments} color="#1a6eb5" iconName="building" />
+        <StatCard title="Total Devices" value={stats.totalDevices} color="#6a0dad" iconName="monitor" />
       </div>
 
       {/* Device Status Breakdown */}
       <div style={styles.deviceSection}>
         <div style={styles.deviceSectionHeader}>
-          <span style={styles.deviceSectionIcon}>💻</span>
+          <Icon name="monitor" size={16} style={{ color: '#6a0dad' }} />
           <span style={styles.deviceSectionTitle}>Device Status Breakdown</span>
         </div>
         <div style={styles.cardGrid}>
-          <StatCard title="Active" value={stats.activeDevices} color="#00853f" icon="✅" />
-          <StatCard title="Under Maintenance" value={stats.maintenanceDevices} color="#c8820a" icon="🔧" />
-          <StatCard title="Decommissioned" value={stats.decommissionedDevices} color="#c0392b" icon="🚫" />
+          <StatCard title="Active" value={stats.activeDevices} color="#00853f" iconName="check" />
+          <StatCard title="Under Maintenance" value={stats.maintenanceDevices} color="#c8820a" iconName="tool" />
+          <StatCard title="Decommissioned" value={stats.decommissionedDevices} color="#c0392b" iconName="ban" />
         </div>
       </div>
 
@@ -96,12 +97,12 @@ export default function Dashboard() {
   );
 }
 
-function StatCard({ title, value, color, icon }) {
+function StatCard({ title, value, color, iconName }) {
   return (
     <div style={{ ...styles.card, borderLeft: `5px solid ${color}` }}>
       <div style={styles.cardTop}>
         <p style={styles.cardTitle}>{title}</p>
-        <span style={{ fontSize: '24px' }}>{icon}</span>
+        <Icon name={iconName} size={22} style={{ color }} />
       </div>
       <p style={{ ...styles.cardValue, color }}>{value}</p>
     </div>
@@ -133,13 +134,13 @@ const styles = {
     marginTop: '4px',
   },
   dateBadge: {
-    backgroundColor: '#e8f5e9',
+    backgroundColor: '#eaf6ff',
     color: '#12aafc',
     padding: '8px 16px',
     borderRadius: '20px',
     fontSize: '0.8rem',
     fontWeight: '600',
-    border: '1px solid #c8e6c9',
+    border: '1px solid #b3e0ff',
   },
   cardGrid: {
     display: 'grid',
@@ -163,9 +164,6 @@ const styles = {
     marginBottom: '1rem',
     paddingBottom: '0.8rem',
     borderBottom: '1px solid #e8d5ff',
-  },
-  deviceSectionIcon: {
-    fontSize: '18px',
   },
   deviceSectionTitle: {
     fontSize: '0.85rem',
@@ -217,7 +215,7 @@ const styles = {
     margin: 0,
   },
   sectionBadge: {
-    backgroundColor: '#e8f5e9',
+    backgroundColor: '#eaf6ff',
     color: '#12aafc',
     padding: '4px 12px',
     borderRadius: '12px',
@@ -249,7 +247,7 @@ const styles = {
     color: '#333',
   },
   idBadge: {
-    backgroundColor: '#e8f5e9',
+    backgroundColor: '#eaf6ff',
     color: '#12aafc',
     padding: '2px 8px',
     borderRadius: '10px',

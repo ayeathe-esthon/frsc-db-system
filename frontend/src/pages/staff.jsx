@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import Icon from '../components/icons';
+
+const CYAN = '#12aafc';
 
 function Staff({ role }) {
   const [staff, setStaff] = useState([]);
@@ -29,8 +32,7 @@ function Staff({ role }) {
     fetch(`http://localhost:5000/api/staff/${deleteTargetId}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${localStorage.getItem('frsc_token')}` }
-    })
-      .then(() => { fetchStaff(); setDeleteTargetId(null); });
+    }).then(() => { fetchStaff(); setDeleteTargetId(null); });
   };
 
   const handleSubmit = () => {
@@ -94,7 +96,9 @@ function Staff({ role }) {
       {deleteTargetId && (
         <div style={styles.overlay}>
           <div style={styles.dialog}>
-            <div style={styles.dialogIcon}>🗑️</div>
+            <div style={styles.dialogIcon}>
+              <Icon name="trash" size={32} style={{ color: '#c0392b' }} />
+            </div>
             <h3 style={styles.dialogTitle}>Delete Staff Member?</h3>
             <p style={styles.dialogText}>This action cannot be undone. Any devices assigned to this staff member will be unassigned.</p>
             <div style={styles.dialogButtons}>
@@ -111,13 +115,22 @@ function Staff({ role }) {
           <p style={styles.pageSubtitle}>{staff.length} record{staff.length !== 1 ? 's' : ''} found</p>
         </div>
         {isAdmin && (
-          <button style={styles.addBtn} onClick={openAddForm}>+ Add Staff</button>
+          <button style={styles.addBtn} onClick={openAddForm}>
+            <Icon name="plus" size={15} style={{ marginRight: '6px' }} />
+            Add Staff
+          </button>
         )}
       </div>
 
       {isAdmin && showForm && (
         <div style={styles.formCard}>
-          <h3 style={styles.formTitle}>{editingStaff ? '✏️ Edit Staff Member' : '➕ Add New Staff Member'}</h3>
+          <h3 style={styles.formTitle}>
+            {editingStaff ? (
+              <><Icon name="edit" size={16} style={{ marginRight: '8px' }} />Edit Staff Member</>
+            ) : (
+              <><Icon name="plus" size={16} style={{ marginRight: '8px' }} />Add New Staff Member</>
+            )}
+          </h3>
           <div style={styles.formGrid}>
             <div style={styles.formGroup}>
               <label style={styles.label}>First Name</label>
@@ -184,8 +197,14 @@ function Staff({ role }) {
                 </td>
                 {isAdmin && (
                   <td style={styles.td}>
-                    <button style={styles.editBtn} onClick={() => handleEdit(member)}>✏️ Edit</button>
-                    <button style={styles.deleteBtn} onClick={() => setDeleteTargetId(member.StaffID)}>🗑️ Delete</button>
+                    <button style={styles.editBtn} onClick={() => handleEdit(member)}>
+                      <Icon name="edit" size={13} style={{ marginRight: '5px' }} />
+                      Edit
+                    </button>
+                    <button style={styles.deleteBtn} onClick={() => setDeleteTargetId(member.StaffID)}>
+                      <Icon name="trash" size={13} style={{ marginRight: '5px' }} />
+                      Delete
+                    </button>
                   </td>
                 )}
               </tr>
@@ -197,17 +216,15 @@ function Staff({ role }) {
   );
 }
 
-const GREEN = '#12aafc';
-
 const styles = {
   page: { padding: '2rem 2.5rem', maxWidth: '1100px' },
   loading: { padding: '3rem', color: '#666' },
   pageHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' },
-  pageTitle: { fontSize: '1.8rem', fontWeight: '700', color: GREEN, margin: 0 },
+  pageTitle: { fontSize: '1.8rem', fontWeight: '700', color: CYAN, margin: 0 },
   pageSubtitle: { color: '#666', fontSize: '0.9rem', marginTop: '4px' },
-  addBtn: { backgroundColor: GREEN, color: 'white', border: 'none', padding: '10px 22px', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: '600', boxShadow: '0 2px 6px rgba(0,83,15,0.3)' },
-  formCard: { backgroundColor: 'white', padding: '1.8rem', borderRadius: '10px', marginBottom: '1.5rem', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', borderTop: `4px solid ${GREEN}` },
-  formTitle: { fontSize: '1rem', fontWeight: '700', color: '#1a1a2e', marginBottom: '1.2rem' },
+  addBtn: { display: 'flex', alignItems: 'center', backgroundColor: CYAN, color: 'white', border: 'none', padding: '10px 22px', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: '600', boxShadow: '0 2px 6px rgba(18,170,252,0.3)' },
+  formCard: { backgroundColor: 'white', padding: '1.8rem', borderRadius: '10px', marginBottom: '1.5rem', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', borderTop: `4px solid ${CYAN}` },
+  formTitle: { display: 'flex', alignItems: 'center', fontSize: '1rem', fontWeight: '700', color: '#1a1a2e', marginBottom: '1.2rem' },
   formGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1rem', marginBottom: '1.2rem' },
   formGroup: { display: 'flex', flexDirection: 'column', gap: '6px' },
   label: { fontSize: '0.78rem', fontWeight: '600', color: '#555', textTransform: 'uppercase', letterSpacing: '0.5px' },
@@ -215,22 +232,22 @@ const styles = {
   inputError: { border: '1px solid #e74c3c', backgroundColor: '#fff8f8' },
   errorText: { fontSize: '0.75rem', color: '#e74c3c', marginTop: '2px' },
   formButtons: { display: 'flex', gap: '10px' },
-  saveBtn: { backgroundColor: GREEN, color: 'white', border: 'none', padding: '10px 24px', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' },
+  saveBtn: { backgroundColor: CYAN, color: 'white', border: 'none', padding: '10px 24px', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' },
   cancelBtn: { backgroundColor: '#f0f0f0', color: '#555', border: 'none', padding: '10px 24px', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' },
   tableCard: { backgroundColor: 'white', borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', overflow: 'hidden' },
   table: { width: '100%', borderCollapse: 'collapse' },
-  tableHeadRow: { backgroundColor: GREEN },
+  tableHeadRow: { backgroundColor: CYAN },
   th: { padding: '12px 16px', textAlign: 'left', color: 'white', fontSize: '0.78rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' },
   trEven: { backgroundColor: '#ffffff' },
   trOdd: { backgroundColor: '#f9fafb' },
   td: { padding: '12px 16px', borderBottom: '1px solid #f0f0f0', fontSize: '0.9rem', color: '#333' },
-  idBadge: { backgroundColor: '#e8f5e9', color: GREEN, padding: '2px 8px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: '600' },
+  idBadge: { backgroundColor: '#eaf6ff', color: CYAN, padding: '2px 8px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: '600' },
   nullBadge: { backgroundColor: '#f5f5f5', color: '#999', padding: '2px 8px', borderRadius: '10px', fontSize: '0.8rem' },
-  editBtn: { backgroundColor: '#fff8e1', color: '#c8820a', border: '1px solid #f0d080', padding: '5px 12px', borderRadius: '5px', cursor: 'pointer', marginRight: '6px', fontSize: '13px', fontWeight: '600' },
-  deleteBtn: { backgroundColor: '#fdecea', color: '#c0392b', border: '1px solid #f5c0bb', padding: '5px 12px', borderRadius: '5px', cursor: 'pointer', fontSize: '13px', fontWeight: '600' },
+  editBtn: { display: 'inline-flex', alignItems: 'center', backgroundColor: '#fff8e1', color: '#c8820a', border: '1px solid #f0d080', padding: '5px 12px', borderRadius: '5px', cursor: 'pointer', marginRight: '6px', fontSize: '13px', fontWeight: '600' },
+  deleteBtn: { display: 'inline-flex', alignItems: 'center', backgroundColor: '#fdecea', color: '#c0392b', border: '1px solid #f5c0bb', padding: '5px 12px', borderRadius: '5px', cursor: 'pointer', fontSize: '13px', fontWeight: '600' },
   overlay: { position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 },
   dialog: { backgroundColor: 'white', borderRadius: '12px', padding: '2rem', width: '380px', textAlign: 'center', boxShadow: '0 10px 40px rgba(0,0,0,0.2)' },
-  dialogIcon: { fontSize: '2.5rem', marginBottom: '0.8rem' },
+  dialogIcon: { marginBottom: '0.8rem', display: 'flex', justifyContent: 'center' },
   dialogTitle: { fontSize: '1.1rem', fontWeight: '700', color: '#1a1a2e', marginBottom: '0.6rem' },
   dialogText: { fontSize: '0.88rem', color: '#666', marginBottom: '1.5rem', lineHeight: '1.5' },
   dialogButtons: { display: 'flex', gap: '10px', justifyContent: 'center' },

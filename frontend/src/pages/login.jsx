@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Icon  from '../components/icons'
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
@@ -72,7 +73,7 @@ export default function Login() {
     onClick={() => setShowPassword(!showPassword)}
     style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', fontSize: '16px' }}
   >
-    {showPassword ? '🙈' : '👁️'}
+    {showPassword ? <Icon name="eyeOff" size={16} /> : <Icon name="eye" size = {16}/>}
   </span>
 </div>
 

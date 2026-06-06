@@ -1,4 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
+import Icon from './icons';
 
 function Sidebar() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function Sidebar() {
     <div style={styles.sidebar}>
       {/* Logo area */}
       <div style={styles.logoArea}>
-        <div style={styles.logoIcon}></div>
+        <Icon name="shield" size={28} style={{ color: 'white' }} />
         <div>
           <div style={styles.logoText}>FRSC HQ</div>
           <div style={styles.logoSub}>IT Department</div>
@@ -26,16 +27,16 @@ function Sidebar() {
 
       <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
         <NavLink to="/" end style={({ isActive }) => isActive ? { ...styles.link, ...styles.activeLink } : styles.link}>
-          <span style={styles.icon}>📊</span> Dashboard
+          <Icon name="dashboard" size={16} /> Dashboard
         </NavLink>
         <NavLink to="/staff" style={({ isActive }) => isActive ? { ...styles.link, ...styles.activeLink } : styles.link}>
-          <span style={styles.icon}>👥</span> Staff
+          <Icon name="users" size={16} /> Staff
         </NavLink>
         <NavLink to="/departments" style={({ isActive }) => isActive ? { ...styles.link, ...styles.activeLink } : styles.link}>
-          <span style={styles.icon}>🏢</span> Departments
+          <Icon name="building" size={16} /> Departments
         </NavLink>
         <NavLink to="/devices" style={({ isActive }) => isActive ? { ...styles.link, ...styles.activeLink } : styles.link}>
-          <span style={styles.icon}>💻</span> Devices
+          <Icon name="monitor" size={16} /> Devices
         </NavLink>
       </nav>
 
@@ -46,14 +47,15 @@ function Sidebar() {
 
       <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
         <NavLink to="/change-password" style={({ isActive }) => isActive ? { ...styles.link, ...styles.activeLink } : styles.link}>
-          <span style={styles.icon}>🔑</span> Change Password
+          <Icon name="key" size={16} /> Change Password
         </NavLink>
       </nav>
 
       {/* Footer */}
       <div style={styles.sidebarFooter}>
         <button style={styles.logoutBtn} onClick={handleLogout}>
-          🚪 Logout
+          <Icon name="logout" size={14} style={{ marginRight: '8px' }} />
+          Logout
         </button>
         <div style={styles.footerBadge}>Federal Road Safety Corps</div>
       </div>
@@ -82,9 +84,6 @@ const styles = {
     marginBottom: '24px',
     paddingLeft: '8px',
   },
-  logoIcon: {
-    fontSize: '28px',
-  },
   logoText: {
     fontSize: '18px',
     fontWeight: '700',
@@ -93,7 +92,7 @@ const styles = {
   },
   logoSub: {
     fontSize: '11px',
-    color: '#a8d5b5',
+    color: 'rgba(255,255,255,0.7)',
     letterSpacing: '0.3px',
   },
   divider: {
@@ -103,7 +102,7 @@ const styles = {
   },
   menuLabel: {
     fontSize: '10px',
-    color: '#a8d5b5',
+    color: 'rgba(255,255,255,0.6)',
     letterSpacing: '1.5px',
     fontWeight: '600',
     paddingLeft: '12px',
@@ -113,7 +112,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '10px',
-    color: '#d4edda',
+    color: 'rgba(255,255,255,0.85)',
     textDecoration: 'none',
     padding: '11px 14px',
     borderRadius: '8px',
@@ -129,9 +128,6 @@ const styles = {
     fontWeight: '700',
     boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
   },
-  icon: {
-    fontSize: '16px',
-  },
   sidebarFooter: {
     marginTop: 'auto',
     paddingTop: '16px',
@@ -139,12 +135,14 @@ const styles = {
   },
   footerBadge: {
     fontSize: '10px',
-    color: '#a8d5b5',
+    color: 'rgba(255,255,255,0.5)',
     textAlign: 'center',
     letterSpacing: '0.5px',
   },
   logoutBtn: {
     width: '100%',
+    display: 'flex',
+    alignItems: 'center',
     backgroundColor: 'rgba(255,255,255,0.1)',
     color: 'white',
     border: '1px solid rgba(255,255,255,0.2)',
@@ -154,7 +152,6 @@ const styles = {
     fontSize: '13px',
     fontWeight: '600',
     marginBottom: '12px',
-    textAlign: 'left',
   },
 };
 
